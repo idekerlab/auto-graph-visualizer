@@ -14,8 +14,8 @@ def get_args():
                         type=str, help='This is output directory path')
     parser.add_argument('-a', '--algorithm', default='greedy', type=str,
                         choices=['greedy', 'leading', 'label'], help='This is community detection algorithm')
-    parser.add_argument('-cp' '--colorpalette' default='hls', type=str,
-                        choices=['hls','Accent','Set1','brg','hsv','gnuplot'], help='This is color palette')
+    parser.add_argument('-cp', '--colorpalette', default='hls', type=str,
+                        choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'], help='This is color palette')
 
     return parser.parse_args()
 
@@ -37,14 +37,13 @@ def getCommunityEdge(g, community):
     return edge_community
 
 
-def communityToColors(members):
-    COLORPALETTE = args.colorpalette
+def communityToColors(cp,members):
     basecolor = '#AAAAAA'
     num_members = len(members)
     num_communities = max(members)+1
     colors = [basecolor]*num_members
 
-    colorp = sns.color_palette(COLORPALETTE, num_communities)
+    colorp = sns.color_palette(cp, num_communities)
 
     colorpalette = [rgb2hex(int(a[0]*255), int(a[1]*255),
                             int(a[2]*255)) for a in colorp]
@@ -76,7 +75,7 @@ def get_communities(algo, g):
     elif algo == 'leading':
         communities = g.community_leading_eigenvector()
         v_community = communities.membership
-        e_commnity = getCommunityEdge(g, v_community)
+        e_community = getCommunityEdge(g, v_community)
 
     else:
         communities = g.community_label_propagation()
