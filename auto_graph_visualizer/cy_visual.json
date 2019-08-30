@@ -79,7 +79,7 @@
                 "mappings": {
                     "NODE_FILL_COLOR": {
                         "type": "PASSTHROUGH",
-                        "definition": "COL=colors.community.greedy,T=string"
+                        "definition": "COL=colors_community,T=string"
                     },
                     "NODE_SIZE": {
                         "type": "CONTINUOUS",
@@ -121,11 +121,11 @@
                 "mappings": {
                     "EDGE_STROKE_UNSELECTED_PAINT": {
                         "type": "PASSTHROUGH",
-                        "definition": "COL=colors.community.greedy,T=string"
+                        "definition": "COL=colors_community,T=string"
                     },
                     "EDGE_TRANSPARENCY": {
                         "type": "DISCRETE",
-                        "definition": "COL=community.greedy,T=string,K=0=-1,V=0=30"
+                        "definition": "COL=community,T=string,K=0=-1,V=0=30"
                     }
                 }
             }

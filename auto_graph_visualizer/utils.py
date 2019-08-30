@@ -60,8 +60,24 @@ def rgb2hex(r, g, b):
     return html_color
 
 
-def search_interaction(df, src, tgt):
-    if len(df[(df['source'] == src) & (df['target'] == tgt)]):
-        return df[(df['source'] == src) & (df['target'] == tgt)]['interaction'].values[0]
+def get_communities(algo, g):
+    communities = []
+    v_community = []
+    e_community = []
+
+    if algo == 'greedy':
+        communities = g.community_fastgreedy().as_clustering()
+        v_community = communities.membership
+        e_community = getCommunityEdge(g, v_community)
+
+    elif algo == 'leading':
+        communities = g.community_leading_eigenvector()
+        v_community = communities.membership
+        e_commnity = getCommunityEdge(g, v_community)
+
     else:
-        return df[(df['source'] == tgt) & (df['target'] == src)]['interaction'].values[0]
+        communities = g.community_label_propagation()
+        v_community = communities.membership
+        e_community = getCommunityEdge(g, v_community)
+
+    return communities, v_community, e_community
