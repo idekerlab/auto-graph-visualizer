@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 import igraph
 from ndex2.nice_cx_network import NiceCXNetwork
@@ -8,13 +9,26 @@ from fa2 import ForceAtlas2
 from utils import *
 import json
 
+if(sys.stdin.isatty()):
+    print("Usage: cat <file> | python3 graphvis.py")
+
+nice_cx_network = sys.stdin
+
+
+args = get_args()
+print(args)
+
+
+sys.exit()
+
+"""
 SERVER = 'public.ndexbio.org'
 UUID = '38a9cebf-23dc-11e8-b939-0ac135e8bacf'
 G_NAME = 'subgraph'
 SAVE_NAME = '../test'
+"""
 
-nice_cx_network = ndex2.create_nice_cx_from_server(
-    server=SERVER, uuid=UUID)
+# nice_cx_network = ndex2.create_nice_cx_from_server(server=SERVER, uuid=UUID)
 # show the graph detail
 nice_cx_network.print_summary()
 # convert nice_cx -> pandas
