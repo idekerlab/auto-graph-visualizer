@@ -8,7 +8,7 @@ import ndex2.client as nc
 import ndex2
 import networkx as nx
 from fa2 import ForceAtlas2
-from utils import *
+from .utils import *
 import json
 import os
 
@@ -17,7 +17,9 @@ def graphvis():
     if(sys.stdin.isatty()):
         print("Usage: cat <file> | python3 graphvis.py")
 
-    nice_cx_network = sys.stdin
+    cx_network = sys.stdin
+
+    nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
 
     args = get_args()
 
@@ -161,3 +163,6 @@ def graphvis():
     tmp = open(SAVE_NAME+".cx", 'w')
     json.dump(cxobj, tmp)
     # print(cxobj)
+
+def main():
+    graphvis()
