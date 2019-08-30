@@ -16,17 +16,11 @@ nice_cx_network = sys.stdin
 
 
 args = get_args()
-print(args)
 
+G_NAME = args.name
+SAVE_NAME = args.path
+ALGORITHM = args.algorithm
 
-sys.exit()
-
-"""
-SERVER = 'public.ndexbio.org'
-UUID = '38a9cebf-23dc-11e8-b939-0ac135e8bacf'
-G_NAME = 'subgraph'
-SAVE_NAME = '../test'
-"""
 
 # nice_cx_network = ndex2.create_nice_cx_from_server(server=SERVER, uuid=UUID)
 # show the graph detail
