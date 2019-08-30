@@ -93,3 +93,6 @@ ENV/
 
 Dockerfile
 run_docker.sh
+
+# data(cx)
+*.cx

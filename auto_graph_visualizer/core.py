@@ -11,22 +11,19 @@ from fa2 import ForceAtlas2
 from .utils import *
 import json
 import os
+import ast
 
 
-def graphvis():
+def main():
     if(sys.stdin.isatty()):
         print("Usage: cat <file> | python3 graphvis.py")
-
-    cx_network = sys.stdin
-
+    cx_network = json.load(sys.stdin)
     nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
-
     args = get_args()
 
     G_NAME = args.name
     SAVE_NAME = args.path + G_NAME
     ALGORITHM = args.algorithm
-
     # nice_cx_network = ndex2.create_nice_cx_from_server(server=SERVER, uuid=UUID)
     # show the graph detail
     nice_cx_network.print_summary()
@@ -50,31 +47,20 @@ def graphvis():
     # analysis
 
     """
-    g_density = g.density() #density
-    g_transitivity_undirected = g.transitivity_undirected() #Transitivity
-    """
+        g_density = g.density() #density
+        g_transitivity_undirected = g.transitivity_undirected() #Transitivity
+        """
     g_closeness = g.vs.closeness()  # Closeness Centrarity
     g_degree = g.vs.degree()  # Degree
     g_pagerank = g.vs.pagerank(directed=False)  # PageRank
     g_vs_betweenness = g.vs.betweenness()  # Betweenness Centrarity
     g_es_betweenness = g.es.edge_betweenness()  # Edge Betweenness
 
-    communities_greedy = g.community_fastgreedy().as_clustering()
-    communities_leading = g.community_leading_eigenvector()
-    communities_label_propagation = g.community_label_propagation()
-
-    v_community_greedy = communities_greedy.membership
-    v_community_leading = communities_leading.membership
-    v_community_label_propagation = communities_label_propagation.membership
-
-    e_commnity_greedy = getCommunityEdge(g, v_community_greedy)
-    e_commnity_leading = getCommunityEdge(g, v_community_leading)
-    e_community_label_propagation = getCommunityEdge(
-        g, v_community_label_propagation)
+    communities, v_community, e_community = get_communities(ALGORITHM, g)
 
     # add color
-    g.vs['color'] = communityToColors(communities_greedy.membership)
-    g.es['color'] = communityToColors(e_commnity_greedy)
+    g.vs['color'] = communityToColors(communities.membership)
+    g.es['color'] = communityToColors(e_community)
 
     # convert igraph -> networkx
     G_nx = nx.Graph()
@@ -105,7 +91,7 @@ def graphvis():
         # Log
         verbose=True)
 
-    g.es['weights'] = [0 if i == -1 else 400 for i in e_commnity_greedy]
+    g.es['weights'] = [0 if i == -1 else 400 for i in e_community]
     positions = forceatlas2.forceatlas2_igraph_layout(
         g, pos=None, iterations=2000, weight_attr='weights')
 
@@ -123,36 +109,20 @@ def graphvis():
         ncx_from_x.set_node_attribute(i, "pagerank", g_pagerank[i])
         ncx_from_x.set_node_attribute(i, "betweenness", g_vs_betweenness[i])
         ncx_from_x.set_node_attribute(
-            i, "community.greedy", v_community_greedy[i])
+            i, "community", v_community[i])
         ncx_from_x.set_node_attribute(
-            i, "community.leading", v_community_leading[i])
-        ncx_from_x.set_node_attribute(
-            i, "community.label.propagation", v_community_label_propagation[i])
-        ncx_from_x.set_node_attribute(
-            i, "colors.community.greedy", communityToColors(v_community_greedy)[i])
-        ncx_from_x.set_node_attribute(
-            i, "colors.community.leading", communityToColors(v_community_leading)[i])
-        ncx_from_x.set_node_attribute(i, "colors.community.label.propagation", communityToColors(
-            v_community_label_propagation)[i])
+            i, "colors_community", communityToColors(v_community)[i])
 
     for i in range(g.ecount()):
         ncx_from_x.set_edge_attribute(
-            i, "betweenness.edge", g_es_betweenness[i])
+            i, "betweenness_edge", g_es_betweenness[i])
         ncx_from_x.set_edge_attribute(
-            i, "community.greedy", e_commnity_greedy[i])
+            i, "community", e_community[i])
         ncx_from_x.set_edge_attribute(
-            i, "community.leading", e_commnity_leading[i])
-        ncx_from_x.set_edge_attribute(
-            i, "community.label.propagation", e_community_label_propagation[i])
-        ncx_from_x.set_edge_attribute(
-            i, "colors.community.greedy", communityToColors(e_commnity_greedy)[i])
-        ncx_from_x.set_edge_attribute(
-            i, "colors.community.leading", communityToColors(e_commnity_leading)[i])
-        ncx_from_x.set_edge_attribute(i, "colors.community.label.propagation", communityToColors(
-            e_community_label_propagation)[i])
+            i, "colors_community", communityToColors(e_community)[i])
 
     # add cytoscape visualization config
-    with open(os.path.dirname(__file__)+'cy_visual.json') as f:
+    with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
         cyconfig = json.load(f)
     ncx_from_x.set_opaque_aspect("cartesianLayout", certesian)
     ncx_from_x.set_opaque_aspect(
