@@ -12,6 +12,7 @@ from .utils import *
 import json
 import os
 import ast
+import math
 
 
 def main():
@@ -70,6 +71,7 @@ def main():
     for i, j in g.get_edgelist():
         G_nx.add_edge(g.vs['name'][i], g.vs['name'][j])
 
+    ratio = g.vcount()/100.0
     # add position
     forceatlas2 = ForceAtlas2(
         # Behavior alternatives
@@ -85,14 +87,14 @@ def main():
         multiThreaded=False,  # NOT IMPLEMENTED
 
         # Tuning
-        scalingRatio=100,
+        scalingRatio=math.sqrt(ratio) * 4,
         strongGravityMode=False,
-        gravity=1500,
+        gravity=ratio * 25,
 
         # Log
         verbose=True)
 
-    g.es['weights'] = [0 if i == -1 else 400 for i in e_community]
+    g.es['weights'] = [0 if i == -1 else math.sqrt(ratio)*15 for i in e_community]
     positions = forceatlas2.forceatlas2_igraph_layout(
         g, pos=None, iterations=2000, weight_attr='weights')
 
