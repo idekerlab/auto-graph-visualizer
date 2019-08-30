@@ -147,3 +147,4 @@ cxobj = ncx_from_x.to_cx()
 
 tmp = open(SAVE_NAME+".cx", 'w')
 json.dump(cxobj, tmp)
+# print(cxobj)
