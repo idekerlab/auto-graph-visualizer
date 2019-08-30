@@ -17,6 +17,7 @@ import ast
 def main():
     if(sys.stdin.isatty()):
         print("Usage: cat <file> | python3 graphvis.py")
+        sys.exit()
     cx_network = json.load(sys.stdin)
     nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
     args = get_args()
@@ -60,8 +61,8 @@ def main():
     communities, v_community, e_community = get_communities(ALGORITHM, g)
 
     # add color
-    g.vs['color'] = communityToColors(COLORPALETTE,communities.membership)
-    g.es['color'] = communityToColors(COLORPALETTE,e_community)
+    g.vs['color'] = communityToColors(COLORPALETTE, communities.membership)
+    g.es['color'] = communityToColors(COLORPALETTE, e_community)
 
     # convert igraph -> networkx
     G_nx = nx.Graph()
@@ -112,7 +113,7 @@ def main():
         ncx_from_x.set_node_attribute(
             i, "community", v_community[i])
         ncx_from_x.set_node_attribute(
-            i, "colors_community", communityToColors(COLORPALETTE,v_community)[i])
+            i, "colors_community", communityToColors(COLORPALETTE, v_community)[i])
 
     for i in range(g.ecount()):
         ncx_from_x.set_edge_attribute(
@@ -120,7 +121,7 @@ def main():
         ncx_from_x.set_edge_attribute(
             i, "community", e_community[i])
         ncx_from_x.set_edge_attribute(
-            i, "colors_community", communityToColors(COLORPALETTE,e_community)[i])
+            i, "colors_community", communityToColors(COLORPALETTE, e_community)[i])
 
     # add cytoscape visualization config
     with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
