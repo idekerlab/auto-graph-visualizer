@@ -8,17 +8,17 @@ import ndex2.client as nc
 import ndex2
 import networkx as nx
 from fa2 import ForceAtlas2
-from utils import *
+from .utils import *
 import json
 import os
+import ast
 
 
-def graphvis():
+def main():
     if(sys.stdin.isatty()):
         print("Usage: cat <file> | python3 graphvis.py")
-
-    nice_cx_network = sys.stdin
-
+    cx_network = json.load(sys.stdin)
+    nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
     args = get_args()
 
     G_NAME = args.name
@@ -48,9 +48,9 @@ def graphvis():
     # analysis
 
     """
-    g_density = g.density() #density
-    g_transitivity_undirected = g.transitivity_undirected() #Transitivity
-    """
+        g_density = g.density() #density
+        g_transitivity_undirected = g.transitivity_undirected() #Transitivity
+        """
     g_closeness = g.vs.closeness()  # Closeness Centrarity
     g_degree = g.vs.degree()  # Degree
     g_pagerank = g.vs.pagerank(directed=False)  # PageRank
@@ -150,7 +150,7 @@ def graphvis():
             e_community_label_propagation)[i])
 
     # add cytoscape visualization config
-    with open(os.path.dirname(__file__)+'cy_visual.json') as f:
+    with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
         cyconfig = json.load(f)
     ncx_from_x.set_opaque_aspect("cartesianLayout", certesian)
     ncx_from_x.set_opaque_aspect(
