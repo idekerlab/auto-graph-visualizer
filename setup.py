@@ -17,6 +17,10 @@ setup(
     author_email='',
     url='https://github.com/idekerlab/auto-graph-visualizer',
     license=license,
-    packages=find_packages(exclude=('tests', 'docs'))
+    packages=find_packages(exclude=('tests', 'docs')),
+    entry_points={
+        "console_scripts": [
+            "agviz=auto_graph_visualizer.core:main",
+        ]
+    }
 )
-
