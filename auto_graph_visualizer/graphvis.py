@@ -11,6 +11,7 @@ import json
 SERVER = 'public.ndexbio.org'
 UUID = '38a9cebf-23dc-11e8-b939-0ac135e8bacf'
 G_NAME = 'subgraph'
+SAVE_NAME = '../test'
 
 nice_cx_network = ndex2.create_nice_cx_from_server(
     server=SERVER, uuid=UUID)
@@ -141,22 +142,8 @@ ncx_from_x.set_opaque_aspect("cartesianLayout", certesian)
 ncx_from_x.set_opaque_aspect(
     "cyVisualProperties", cyconfig['cyVisualProperties'])
 
-# upload
-my_account = "am"
-my_password = "ndexpassword"
-my_server = "http://public.ndexbio.org"
 
-if my_account == 'enter your username here':
-    print('*******WARNING!!!!*******')
-    print('Please change the username and password before proceeding')
-else:
-    try:
-        my_ndex = nc.Ndex2(my_server, my_account, my_password)
-        my_ndex.update_status()
-        print("Success.  Please continue.")
-    except Exception as inst:
-        print("Could not access account %s with password %s" %
-              (my_account, my_password))
-        print(inst.args)
-upload_message = ncx_from_x.upload_to(my_server, my_account, my_password)
-print(upload_message)
+cxobj = ncx_from_x.to_cx()
+
+tmp = open(SAVE_NAME+".cx", 'w')
+json.dump(cxobj, tmp)
