@@ -8,7 +8,7 @@ import seaborn as sns
 def get_args():
     parser = argparse.ArgumentParser(
         description='test argparse script')
-    parser.add_argument('-n', '--name', default='graph',
+    parser.add_argument('-n', '--name', default='test_out',
                         type=str, help='This is output graph name.')
     parser.add_argument('-p', '--path', default='./',
                         type=str, help='This is output directory path')
