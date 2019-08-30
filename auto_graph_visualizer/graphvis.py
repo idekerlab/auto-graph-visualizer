@@ -8,6 +8,7 @@ import networkx as nx
 from fa2 import ForceAtlas2
 from utils import *
 import json
+import os
 
 if(sys.stdin.isatty()):
     print("Usage: cat <file> | python3 graphvis.py")
@@ -18,7 +19,7 @@ nice_cx_network = sys.stdin
 args = get_args()
 
 G_NAME = args.name
-SAVE_NAME = args.path
+SAVE_NAME = args.path + G_NAME
 ALGORITHM = args.algorithm
 
 
@@ -144,7 +145,7 @@ for i in range(g.ecount()):
         e_community_label_propagation)[i])
 
 # add cytoscape visualization config
-with open('cy_visual.json') as f:
+with open(os.path.dirname(__file__)+'cy_visual.json') as f:
     cyconfig = json.load(f)
 ncx_from_x.set_opaque_aspect("cartesianLayout", certesian)
 ncx_from_x.set_opaque_aspect(
