@@ -95,4 +95,5 @@ Dockerfile
 run_docker.sh
 
 # data(cx)
-*.cx
+test_in.cx
+test_out.cx
