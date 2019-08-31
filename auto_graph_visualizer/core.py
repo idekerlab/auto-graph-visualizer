@@ -11,7 +11,6 @@ from fa2 import ForceAtlas2
 from .utils import *
 import json
 import os
-import ast
 import math
 
 
