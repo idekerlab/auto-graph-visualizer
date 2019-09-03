@@ -1,1 +1,2 @@
 include LICENSE
+include auto_graph_visualizer/cy_visual.json

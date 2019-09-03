@@ -29,7 +29,9 @@ setup(
     url='https://github.com/idekerlab/auto-graph-visualizer',
     install_requires=read_requirements(),
     license=license,
-    packages=find_packages(exclude=('tests', 'docs')),
+    #packages=find_packages(exclude=('tests', 'docs')),
+    packages=['auto_graph_visualizer'],
+    package_data={'auto_graph_visualizer': ['cy_visual.json']},
     entry_points={
         "console_scripts": [
             "agviz=auto_graph_visualizer.core:main",
