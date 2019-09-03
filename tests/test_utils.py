@@ -22,8 +22,8 @@ class TestUtils(unittest.TestCase):
         tuples = [tuple(x) for x in edgelist.values]
         g = igraph.Graph.TupleList(tuples, directed=False)
 
-        self.assertListEqual(
-            e_community, getCommunityEdge(g, v_community))
+        self.assertEqual(e_community, getCommunityEdge(g, v_community))
+        # self.assertListEqual([1, 2, 3, 4], getCommunityEdge(g, v_community))
 
 
 if __name__ == '__main__':
