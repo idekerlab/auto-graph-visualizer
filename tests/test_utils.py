@@ -6,6 +6,7 @@ import os
 
 class TestUtils(unittest.TestCase):
     def test_getCommunityEdge(self):
+        print(os.path.dirname(__file__)+'/test_cx/test.cx')
         testcx = ndex2.create_nice_cx_from_file(
             os.path.dirname(__file__)+'/test_cx/test.cx')
         v_community = [int(testcx.get_node_attribute_value(
