@@ -8,7 +8,6 @@ import glob
 class TestUtils(unittest.TestCase):
     def test_getCommunityEdge(self):
         filelist = glob.glob(os.path.dirname(__file__)+'/test_cx/*')
-        print(filelist)
         for a in filelist:
             testcx= ndex2.create_nice_cx_from_file(a)
             # convert nice_cx -> pandas
