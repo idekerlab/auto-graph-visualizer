@@ -47,7 +47,7 @@ you can chose following parameters:
 * -p : output directory path (default : './')
 * -a : community detection algorithm (default : 'greedy')
     * greedy : based on the greedy optimization of modularity. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.70.066111)
-    * leading : Newman's eigenvector community structure detection. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104)
+    * eigenvec : Newman's eigenvector community structure detection. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104)
     * label : the label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
 * -cp : base color palette (default : 'hls')
     * hls
@@ -67,7 +67,7 @@ you can chose following parameters:
 
     * gnuplot
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_gnuplot.png" width=50%>
-    
+
 
 ## Authors
 

@@ -13,7 +13,7 @@ def get_args():
     parser.add_argument('-p', '--path', default='./',
                         type=str, help='This is output directory path')
     parser.add_argument('-a', '--algorithm', default='greedy', type=str,
-                        choices=['greedy', 'leading', 'label'], help='This is community detection algorithm')
+                        choices=['greedy', 'eigenvec', 'label'], help='This is community detection algorithm')
     parser.add_argument('-cp', '--colorpalette', default='hls', type=str,
                         choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'], help='This is color palette')
 
@@ -72,7 +72,7 @@ def get_communities(algo, g):
         v_community = communities.membership
         e_community = getCommunityEdge(g, v_community)
 
-    elif algo == 'leading':
+    elif algo == 'eigenvec':
         communities = g.community_leading_eigenvector()
         v_community = communities.membership
         e_community = getCommunityEdge(g, v_community)
