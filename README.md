@@ -29,7 +29,7 @@ $ git clone https://github.com/idekerlab/auto-graph-visualizer
 In the downloaded (cloned) directory, install using setup.py
 
 ```
-python3 setup.py install
+$ python3 setup.py install
 ```
 
 #### Known issues in installing
@@ -52,16 +52,22 @@ you can chose following parameters:
 * -cp : base color palette (default : 'hls')
     * hls
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png" width=50%>
+
     * Accent
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_Accent.png" width=50%>
+
     * Set1
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_Set1.png" width=50%>
+
     * brg
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_brg.png" width=50%>
+
     * hsv
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_hsv.png" width=50%>
+
     * gnuplot
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_gnuplot.png" width=50%>
+    
 
 ## Authors
 
