@@ -81,5 +81,5 @@ def get_communities(algo, g):
         communities = g.community_label_propagation()
         v_community = communities.membership
         e_community = getCommunityEdge(g, v_community)
-    print(g.get_edgelist())
+
     return communities, v_community, e_community

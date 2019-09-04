@@ -36,6 +36,25 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(e_community, getCommunityEdge(g, v_community))
         # self.assertListEqual([1, 2, 3, 4], getCommunityEdge(g, v_community))
 
+    def test_communityToColors(self):
+        testcx_out = ndex2.create_nice_cx_from_file(
+            os.path.dirname(__file__)+'/test_cx/test1_out.cx')
+
+        v_color = [str(testcx_out.get_node_attribute_value(
+            i, 'colors_community')) for i in range(len(testcx_out.get_nodes()))]
+
+        e_color = [str(testcx_out.get_edge_attribute_value(
+            i, 'colors_community')) for i in range(len(testcx_out.get_edges()))]
+
+        v_community = [int(testcx_out.get_node_attribute_value(
+            i, 'community')) for i in range(len(testcx_out.get_nodes()))]
+
+        e_community = [int(testcx_out.get_edge_attribute_value(
+            i, 'community')) for i in range(len(testcx_out.get_edges()))]
+
+        self.assertEqual(v_color, communityToColors('hls', v_community))
+        self.assertEqual(e_color, communityToColors('hls', e_community))
+
 
 if __name__ == '__main__':
     unittest.main()
