@@ -1,7 +1,9 @@
 # Automatic Graph Visualizer (AGVIZ)
 
-An automatic graph visualize package for [Cytoscape](https://cytoscape.org/).
 ![sample_output](https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png)
+
+
+An automatic graph visualize package for [Cytoscape](https://cytoscape.org/).
 
 ## More Details
 
@@ -49,11 +51,17 @@ you can chose following parameters:
     * label : the label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
 * -cp : base color palette (default : 'hls')
     * hls
+    <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png" width=50%>
     * Accent
+    <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_Accent.png" width=50%>
     * Set1
+    <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_Set1.png" width=50%>
     * brg
+    <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_brg.png" width=50%>
     * hsv
+    <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_hsv.png" width=50%>
     * gnuplot
+    <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_gnuplot.png" width=50%>
 
 ## Authors
 
