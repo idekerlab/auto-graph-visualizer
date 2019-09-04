@@ -97,3 +97,12 @@ run_docker.sh
 # data(cx)
 test_in.cx
 test_out.cx
+
+# images
+sample_in.png  
+sample_out.png  
+sample_out_Accent.png  
+sample_out_Set1.png  
+sample_out_brg.png  
+sample_out_gnuplot.png  
+sample_out_hsv.png
