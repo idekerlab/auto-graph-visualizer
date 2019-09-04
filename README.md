@@ -41,7 +41,7 @@ $ python3 setup.py install
 ```
 $ cat your_file | agviz
 ```
-you can chose following parameters:
+options:
 
 * -n : output graph name(.cx) (default : 'test_out')
 * -p : output directory path (default : './')
