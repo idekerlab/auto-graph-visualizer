@@ -30,10 +30,12 @@ def main():
     # show the graph detail
     nice_cx_network.print_summary()
     # convert nice_cx -> pandas
-    nice_cx_from_server_df = nice_cx_network.to_pandas_dataframe()
+    nice_cx_df = nice_cx_network.to_pandas_dataframe()
+    nice_cx_df = nice_cx_df.sort_values(
+        by=([nice_cx_df.columns[0], nice_cx_df.columns[2]]))
 
     # convert pandas -> igraph
-    edgelist = nice_cx_from_server_df.iloc[:, [0, 2]]
+    edgelist = nice_cx_df.iloc[:, [0, 2]]
     tuples = [tuple(x) for x in edgelist.values]
     g_original = igraph.Graph.TupleList(tuples, directed=False)
 

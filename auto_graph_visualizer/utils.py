@@ -37,7 +37,7 @@ def getCommunityEdge(g, community):
     return edge_community
 
 
-def communityToColors(cp,members):
+def communityToColors(cp, members):
     basecolor = '#AAAAAA'
     num_members = len(members)
     num_communities = max(members)+1
@@ -81,5 +81,5 @@ def get_communities(algo, g):
         communities = g.community_label_propagation()
         v_community = communities.membership
         e_community = getCommunityEdge(g, v_community)
-
+    print(g.get_edgelist())
     return communities, v_community, e_community
