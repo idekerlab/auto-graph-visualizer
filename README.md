@@ -4,7 +4,7 @@ An automatic graph visualize package for [Cytoscape](https://cytoscape.org/).
 
 ## More Details
 
-Automatic Graph Visualizer[AGVIZ] is one of the Cytoscape Projects. AGVIZ attaches some visualize information for the Cytoscape to the network structure information (CX file). 
+Automatic Graph Visualizer[AGVIZ] is one of the Cytoscape Projects. AGVIZ attaches some visualize information for the Cytoscape to the network structure information ([CX format](https://home.ndexbio.org/data-model/)). 
 
 ## System Requirements
 
