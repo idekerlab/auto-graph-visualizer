@@ -3,7 +3,7 @@
 ![sample_output](https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png)
 
 
-An automatic graph visualize package for [Cytoscape](https://cytoscape.org/).
+**An automatic graph visualize package for [Cytoscape](https://cytoscape.org/).**
 
 ## More Details
 
@@ -48,7 +48,7 @@ you can chose following parameters:
 * -a : community detection algorithm (default : 'greedy')
     * greedy : based on the greedy optimization of modularity. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.70.066111)
     * eigenvec : Newman's eigenvector community structure detection. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104)
-    * label : the label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
+    * labelprop : the label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
 * -cp : base color palette (default : 'hls')
     * hls
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png" width=50%>
