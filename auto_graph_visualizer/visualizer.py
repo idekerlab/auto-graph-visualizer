@@ -69,7 +69,7 @@ class AutoGraphVisualizer:
         certesian = [{'node': i, 'x': list(positions)[i][0], 'y': list(positions)[
             i][1]}for i in range(len(positions))]
 
-        # convert networkx -> Nicex
+        # convert networkx -> NiceCX
         ncx_from_x = ndex2.create_nice_cx_from_networkx(G_nx)
 
         self.__add_ncxattributes(ncx_from_x, g_status, certesian, self.options)
