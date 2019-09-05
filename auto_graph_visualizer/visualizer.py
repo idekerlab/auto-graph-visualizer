@@ -80,6 +80,12 @@ class AutoGraphVisualizer:
 
     def __apply_layout(self, graph, g_status, options):
         ratio = graph.vcount()/100.0
+        if options["density"] == "normal":
+            c = 4
+        elif options["density"] == "dense":
+            c = 1
+        else :
+            c = 16
         # add position
         forceatlas2 = ForceAtlas2(
             # Behavior alternatives
@@ -93,7 +99,7 @@ class AutoGraphVisualizer:
             barnesHutTheta=1.2,
             multiThreaded=False,  # NOT IMPLEMENTED
             # Tuning
-            scalingRatio=math.sqrt(ratio) * 4,
+            scalingRatio=math.sqrt(ratio) * c,
             strongGravityMode=False,
             gravity=ratio * 25,
             # Log
