@@ -12,20 +12,41 @@ from .utils import *
 import json
 import os
 import math
-
+from .visualizer import AutoGraphVisualizer
 
 def main():
     if(sys.stdin.isatty()):
         print("Usage: cat <file> | python3 graphvis.py")
         sys.exit()
-    cx_network = json.load(sys.stdin)
-    nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
     args = get_args()
 
     G_NAME = args.name
     SAVE_NAME = args.path + G_NAME
     ALGORITHM = args.algorithm
     COLORPALETTE = args.colorpalette
+
+    cx_network = json.load(sys.stdin)
+
+    options = {
+        "graph_name": G_NAME,
+        "output_file_name": SAVE_NAME,
+        "algorithm": ALGORITHM,
+        "color_palette": COLORPALETTE
+    }
+
+    # Create visualizer instance
+    viz = AutoGraphVisualizer()
+
+    # Generate visualization
+    viz.generate_viz(cx_network, options)
+
+
+    #############################
+    # 以下はクラス内の処理に隠蔽する
+
+    nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
+
+
     # nice_cx_network = ndex2.create_nice_cx_from_server(server=SERVER, uuid=UUID)
     # show the graph detail
     nice_cx_network.print_summary()
