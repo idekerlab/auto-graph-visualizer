@@ -15,6 +15,7 @@ def main():
     SAVE_NAME = args.path + G_NAME
     ALGORITHM = args.algorithm
     COLORPALETTE = args.colorpalette
+    DENSITY = args.density
 
     cx_network = json.load(sys.stdin)
 
@@ -22,7 +23,8 @@ def main():
         "graph_name": G_NAME,
         "output_file_name": SAVE_NAME,
         "algorithm": ALGORITHM,
-        "color_palette": COLORPALETTE
+        "color_palette": COLORPALETTE,
+        "density": DENSITY
     }
 
     # Create visualizer instance
