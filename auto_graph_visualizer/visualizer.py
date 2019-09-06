@@ -15,16 +15,24 @@ import numpy as np
 class graph_status:
     def __init__(self, graph):
         self.graph = graph
-        self.density = -1  # density
-        self.transitivity_undirected = -1  # Transitivity
-        self.closeness = -1  # Closeness Centrarity
-        self.degree = -1  # Degree
-        self.pagerank = -1  # PageRank
-        self.vs_betweenness = -1  # Betweenness Centrarity
-        self.es_betweenness = -1  # Edge Betweenness
         self.communities = []
         self.v_community = []
         self.e_community = []
+
+    """
+
+    def calc_closeness(self):
+        self.closeness = self.graph.vs.closeness()  # Closeness Centrarity
+
+    def calc_degree(self):
+        self.degree = self.graph.vs.degree()  # Degree
+
+    def calc_pagerank(self):
+        self.pagerank = self.graph.vs.pagerank(directed=False)  # PageRank
+
+    def calc_betweenness(self):
+        self.betweenness = self.graph.vs.betweenness()  # Betweenness Centrarity
+    """
 
 
 class AutoGraphVisualizer:
@@ -54,7 +62,7 @@ class AutoGraphVisualizer:
         g_status = graph_status(
             largeset_subgraph.simplify(multiple=True, loops=True))
 
-        self.__compute_stats(g_status.graph, g_status, self.options)
+        self.__compute_stats(g_status, self.options)
 
         positions = self.__apply_layout(g_status.graph, g_status, self.options)
 
@@ -80,6 +88,7 @@ class AutoGraphVisualizer:
         return cxobj
 
     def __apply_layout(self, graph, g_status, options):
+<<<<<<< HEAD
         if options["kamada_kawai"]:
             if options["density"] == "normal":
                 c = 70
@@ -123,42 +132,89 @@ class AutoGraphVisualizer:
                 graph, pos=None, iterations=2000, weight_attr='weights')
 
             return positions
+=======
+        ratio = graph.vcount()/100.0
+        if options["density"] == "normal":
+            c = 4
+        elif options["density"] == "dense":
+            c = 1
+        else:
+            c = 16
+        # add position
+        forceatlas2 = ForceAtlas2(
+            # Behavior alternatives
+            outboundAttractionDistribution=True,  # Dissuade hubs
+            linLogMode=False,  # NOT IMPLEMENTED
+            adjustSizes=False,  # Prevent overlap (NOT IMPLEMENTED)
+            edgeWeightInfluence=1.0,
+            # Performance
+            jitterTolerance=1.0,  # Tolerance
+            barnesHutOptimize=True,
+            barnesHutTheta=1.2,
+            multiThreaded=False,  # NOT IMPLEMENTED
+            # Tuning
+            scalingRatio=math.sqrt(ratio) * c,
+            strongGravityMode=False,
+            gravity=ratio * 25,
+            # Log
+            verbose=True)
 
-    def __compute_stats(self, graph, g_status, options):
-        g_status.density = graph.density()  # density
-        g_status.transitivity_undirected = graph.transitivity_undirected()  # Transitivity
-        g_status.closeness = graph.vs.closeness()  # Closeness Centrarity
-        g_status.degree = graph.vs.degree()  # Degree
-        g_status.pagerank = graph.vs.pagerank(directed=False)  # PageRank
-        g_status.vs_betweenness = graph.vs.betweenness()  # Betweenness Centrarity
-        g_status.es_betweenness = graph.es.edge_betweenness()  # Edge Betweenness
+        graph.es['weights'] = [0 if i == -
+                               1 else math.sqrt(ratio)*15 for i in g_status.e_community]
+        positions = forceatlas2.forceatlas2_igraph_layout(
+            graph, pos=None, iterations=2000, weight_attr='weights')
 
+        return positions
+>>>>>>> b43a0dcdcd8ff1273e8f5161860f83daf3445379
+
+    def __compute_stats(self, g_status, options):
+        # g_status.density = graph.density()  # density
+        # g_status.transitivity_undirected = graph.transitivity_undirected()  # Transitivity
+        setattr(g_status, options['nodesize'], getattr(
+            g_status.graph, options['nodesize'])())
         g_status.communities, g_status.v_community, g_status.e_community = get_communities(
-            options["algorithm"], graph)
+            options["algorithm"], g_status.graph)
 
     def __add_ncxattributes(self, ncx, g_status, certesian, options):
+        colors = communityToColors(
+            options["color_palette"], g_status.v_community)
+
         for i in range(g_status.graph.vcount()):
-            ncx.set_node_attribute(i, "closeness", g_status.closeness[i])
-            ncx.set_node_attribute(i, "degree", g_status.degree[i])
-            ncx.set_node_attribute(i, "pagerank", g_status.pagerank[i])
             ncx.set_node_attribute(
-                i, "betweenness", g_status.vs_betweenness[i])
+                i, options['nodesize'], getattr(g_status, options['nodesize'])[i])
             ncx.set_node_attribute(
                 i, "community", g_status.v_community[i])
             ncx.set_node_attribute(
-                i, "colors_community", communityToColors(options["color_palette"], g_status.v_community)[i])
+                i, "colors_community", colors[i])
+
+        colors = communityToColors(
+            options["color_palette"], g_status.e_community)
 
         for i in range(g_status.graph.ecount()):
             ncx.set_edge_attribute(
-                i, "betweenness_edge", g_status.es_betweenness[i])
-            ncx.set_edge_attribute(
                 i, "community", g_status.e_community[i])
             ncx.set_edge_attribute(
-                i, "colors_community", communityToColors(options["color_palette"], g_status.e_community)[i])
+                i, "colors_community", colors[i])
 
         # add cytoscape visualization config
         with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
             cyconfig = json.load(f)
+        self.__change_nodesize(g_status, cyconfig, self.options)
         ncx.set_opaque_aspect("cartesianLayout", certesian)
         ncx.set_opaque_aspect(
             "cyVisualProperties", cyconfig['cyVisualProperties'])
+
+    def __change_nodesize(self, g_status, cyconfig, options):
+        nodesizeprop = cyconfig['cyVisualProperties'][1]['mappings']['NODE_SIZE']['definition']
+        nodesizeprop = nodesizeprop.split(',')
+        tmp = nodesizeprop[0].split('=')
+        tmp[1] = options['nodesize']
+        tmp = '='.join(tmp)
+        nodesizeprop[0] = tmp
+        tmp = nodesizeprop[9].split('=')
+        tmp[2] = str(int(options['maxnodesize']))
+        tmp = '='.join(tmp)
+        nodesizeprop[9] = tmp
+        nodesizeprop = ','.join(nodesizeprop)
+        print(nodesizeprop)
+        cyconfig['cyVisualProperties'][1]['mappings']['NODE_SIZE']['definition'] = nodesizeprop
