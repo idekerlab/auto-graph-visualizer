@@ -16,6 +16,7 @@ def main():
     ALGORITHM = args.algorithm
     COLORPALETTE = args.colorpalette
     DENSITY = args.density
+    KAMADA_KAWAI = args.kamada_kawai
 
     cx_network = json.load(sys.stdin)
 
@@ -24,7 +25,8 @@ def main():
         "output_file_name": SAVE_NAME,
         "algorithm": ALGORITHM,
         "color_palette": COLORPALETTE,
-        "density": DENSITY
+        "density": DENSITY,
+        "kamada_kawai":KAMADA_KAWAI
     }
 
     # Create visualizer instance

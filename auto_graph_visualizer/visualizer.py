@@ -9,6 +9,7 @@ from .utils import *
 import math
 import json
 import os
+import numpy as np
 
 
 class graph_status:
@@ -79,38 +80,49 @@ class AutoGraphVisualizer:
         return cxobj
 
     def __apply_layout(self, graph, g_status, options):
-        ratio = graph.vcount()/100.0
-        if options["density"] == "normal":
-            c = 4
-        elif options["density"] == "dense":
-            c = 1
-        else :
-            c = 16
-        # add position
-        forceatlas2 = ForceAtlas2(
-            # Behavior alternatives
-            outboundAttractionDistribution=True,  # Dissuade hubs
-            linLogMode=False,  # NOT IMPLEMENTED
-            adjustSizes=False,  # Prevent overlap (NOT IMPLEMENTED)
-            edgeWeightInfluence=1.0,
-            # Performance
-            jitterTolerance=1.0,  # Tolerance
-            barnesHutOptimize=True,
-            barnesHutTheta=1.2,
-            multiThreaded=False,  # NOT IMPLEMENTED
-            # Tuning
-            scalingRatio=math.sqrt(ratio) * c,
-            strongGravityMode=False,
-            gravity=ratio * 25,
-            # Log
-            verbose=True)
+        if options["kamada_kawai"]:
+            if options["density"] == "normal":
+                c = 70
+            elif options["density"] == "dense":
+                c = 30
+            else:
+                c = 140
+            positions = graph.layout_kamada_kawai()
+            positions = np.array(positions) * c
+            return positions
+        else:
+            ratio = graph.vcount()/100.0
+            if options["density"] == "normal":
+                c = 4
+            elif options["density"] == "dense":
+                c = 1
+            else :
+                c = 16
+            # add position
+            forceatlas2 = ForceAtlas2(
+                # Behavior alternatives
+                outboundAttractionDistribution=True,  # Dissuade hubs
+                linLogMode=False,  # NOT IMPLEMENTED
+                adjustSizes=False,  # Prevent overlap (NOT IMPLEMENTED)
+                edgeWeightInfluence=1.0,
+                # Performance
+                jitterTolerance=1.0,  # Tolerance
+                barnesHutOptimize=True,
+                barnesHutTheta=1.2,
+                multiThreaded=False,  # NOT IMPLEMENTED
+                # Tuning
+                scalingRatio=math.sqrt(ratio) * c,
+                strongGravityMode=False,
+                gravity=ratio * 25,
+                # Log
+                verbose=True)
 
-        graph.es['weights'] = [0 if i == -
-                               1 else math.sqrt(ratio)*15 for i in g_status.e_community]
-        positions = forceatlas2.forceatlas2_igraph_layout(
-            graph, pos=None, iterations=2000, weight_attr='weights')
+            graph.es['weights'] = [0 if i == -
+                                1 else math.sqrt(ratio)*15 for i in g_status.e_community]
+            positions = forceatlas2.forceatlas2_igraph_layout(
+                graph, pos=None, iterations=2000, weight_attr='weights')
 
-        return positions
+            return positions
 
     def __compute_stats(self, graph, g_status, options):
         g_status.density = graph.density()  # density

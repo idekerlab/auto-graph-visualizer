@@ -18,7 +18,7 @@ def get_args():
                         choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'], help='This is color palette')
     parser.add_argument('-d', '--density', default='normal', type=str,
                         choices=['dense', 'normal', 'sparse'], help='This is density of output graph')
-
+    parser.add_argument('-kk', '--kamada_kawai', action='store_true', default=False, help='This is kamada-kawai layout')
     return parser.parse_args()
 
 
