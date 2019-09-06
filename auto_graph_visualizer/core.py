@@ -28,7 +28,10 @@ def main():
         "algorithm": ALGORITHM,
         "color_palette": COLORPALETTE,
         "density": DENSITY,
-        "kamada_kawai": KAMADA_KAWAI
+        "kamada_kawai": KAMADA_KAWAI,
+        "nodesize": NODE_SIZE,
+        "maxnodesize": MAX_NODESIZE,
+        "density": DENSITY
     }
 
     # Create visualizer instance
