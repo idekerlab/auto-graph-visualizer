@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import sys
 import igraph
 import seaborn as sns
 
@@ -16,13 +17,12 @@ def get_args():
                         choices=['greedy', 'eigenvec', 'labelprop'], help='This is community detection algorithm')
     parser.add_argument('-cp', '--colorpalette', default='hls', type=str,
                         choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'], help='This is color palette')
-<<<<<<< HEAD
     parser.add_argument('-ns', '--nodesize', default='betweenness', type=str,
-                        choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'], help='This is color palette')
-=======
+                        choices=['closeness', 'degree', 'pagerank', 'betweenness', 'diversity'], help='This is standard of node size')
+    parser.add_argument('-maxns', '--maxnodesize',
+                        default=sys.maxsize, type=int, help='This is max node size')
     parser.add_argument('-d', '--density', default='normal', type=str,
                         choices=['dense', 'normal', 'sparse'], help='This is density of output graph')
->>>>>>> 53f61eee95e6bfb98cf2fe00c1bd5b4684f56482
 
     return parser.parse_args()
 
