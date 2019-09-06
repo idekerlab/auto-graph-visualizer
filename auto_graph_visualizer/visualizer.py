@@ -166,5 +166,4 @@ class AutoGraphVisualizer:
         tmp = '='.join(tmp)
         nodesizeprop[9] = tmp
         nodesizeprop = ','.join(nodesizeprop)
-        print(nodesizeprop)
         cyconfig['cyVisualProperties'][1]['mappings']['NODE_SIZE']['definition'] = nodesizeprop

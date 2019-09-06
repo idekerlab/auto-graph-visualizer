@@ -27,14 +27,8 @@ def main():
         "output_file_name": SAVE_NAME,
         "algorithm": ALGORITHM,
         "color_palette": COLORPALETTE,
-<<<<<<< HEAD
         "density": DENSITY,
-        "kamada_kawai":KAMADA_KAWAI
-=======
-        "nodesize": NODE_SIZE,
-        "maxnodesize": MAX_NODESIZE,
-        "density": DENSITY
->>>>>>> b43a0dcdcd8ff1273e8f5161860f83daf3445379
+        "kamada_kawai": KAMADA_KAWAI
     }
 
     # Create visualizer instance
