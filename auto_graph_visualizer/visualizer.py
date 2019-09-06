@@ -165,8 +165,7 @@ class AutoGraphVisualizer:
         tmp = '='.join(tmp)
         nodesizeprop[0] = tmp
         tmp = nodesizeprop[9].split('=')
-        tmp[2] = str(int(min(options['maxnodesize'], max(
-            getattr(g_status, options['nodesize'])))))
+        tmp[2] = str(int(options['maxnodesize']))
         tmp = '='.join(tmp)
         nodesizeprop[9] = tmp
         nodesizeprop = ','.join(nodesizeprop)
