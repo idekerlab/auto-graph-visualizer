@@ -73,7 +73,7 @@ class AutoGraphVisualizer:
         return cxobj
 
     def __apply_layout(self, graph, g_status, options):
-        if options["kamada_kawai"]:
+        if options["positions"] == 'kk':
             if options["density"] == "normal":
                 c = 70
             elif options["density"] == "dense":

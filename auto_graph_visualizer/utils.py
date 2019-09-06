@@ -23,8 +23,8 @@ def get_args():
                         default=1000000, type=int, help='This is max node size')
     parser.add_argument('-d', '--density', default='normal', type=str,
                         choices=['dense', 'normal', 'sparse'], help='This is density of output graph')
-    parser.add_argument('-kk', '--kamada_kawai', action='store_true',
-                        default=False, help='This is kamada-kawai layout')
+    parser.add_argument('-pos', '--positions', default='fa',
+                        choices=['fa', 'kk'], help='This is layout algorithm')
     return parser.parse_args()
 
 

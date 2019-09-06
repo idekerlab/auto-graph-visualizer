@@ -18,7 +18,7 @@ def main():
     NODE_SIZE = args.nodesize
     MAX_NODESIZE = args.maxnodesize
     DENSITY = args.density
-    KAMADA_KAWAI = args.kamada_kawai
+    POSITIONS_ALG = args.positions
 
     cx_network = json.load(sys.stdin)
 
@@ -27,11 +27,10 @@ def main():
         "output_file_name": SAVE_NAME,
         "algorithm": ALGORITHM,
         "color_palette": COLORPALETTE,
-        "density": DENSITY,
-        "kamada_kawai": KAMADA_KAWAI,
         "nodesize": NODE_SIZE,
         "maxnodesize": MAX_NODESIZE,
-        "density": DENSITY
+        "density": DENSITY,
+        "positions": POSITIONS_ALG,
     }
 
     # Create visualizer instance
