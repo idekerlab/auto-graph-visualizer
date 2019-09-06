@@ -20,7 +20,7 @@ def get_args():
     parser.add_argument('-ns', '--nodesize', default='betweenness', type=str,
                         choices=['closeness', 'degree', 'pagerank', 'betweenness', 'diversity'], help='This is standard of node size')
     parser.add_argument('-maxns', '--maxnodesize',
-                        default=100000, type=int, help='This is max node size')
+                        default=1000000, type=int, help='This is max node size')
     parser.add_argument('-d', '--density', default='normal', type=str,
                         choices=['dense', 'normal', 'sparse'], help='This is density of output graph')
     parser.add_argument('-kk', '--kamada_kawai', action='store_true', default=False, help='This is kamada-kawai layout')
