@@ -19,21 +19,6 @@ class graph_status:
         self.v_community = []
         self.e_community = []
 
-    """
-
-    def calc_closeness(self):
-        self.closeness = self.graph.vs.closeness()  # Closeness Centrarity
-
-    def calc_degree(self):
-        self.degree = self.graph.vs.degree()  # Degree
-
-    def calc_pagerank(self):
-        self.pagerank = self.graph.vs.pagerank(directed=False)  # PageRank
-
-    def calc_betweenness(self):
-        self.betweenness = self.graph.vs.betweenness()  # Betweenness Centrarity
-    """
-
 
 class AutoGraphVisualizer:
 
@@ -88,7 +73,6 @@ class AutoGraphVisualizer:
         return cxobj
 
     def __apply_layout(self, graph, g_status, options):
-<<<<<<< HEAD
         if options["kamada_kawai"]:
             if options["density"] == "normal":
                 c = 70
@@ -105,7 +89,7 @@ class AutoGraphVisualizer:
                 c = 4
             elif options["density"] == "dense":
                 c = 1
-            else :
+            else:
                 c = 16
             # add position
             forceatlas2 = ForceAtlas2(
@@ -127,45 +111,11 @@ class AutoGraphVisualizer:
                 verbose=True)
 
             graph.es['weights'] = [0 if i == -
-                                1 else math.sqrt(ratio)*15 for i in g_status.e_community]
+                                   1 else math.sqrt(ratio)*15 for i in g_status.e_community]
             positions = forceatlas2.forceatlas2_igraph_layout(
                 graph, pos=None, iterations=2000, weight_attr='weights')
 
             return positions
-=======
-        ratio = graph.vcount()/100.0
-        if options["density"] == "normal":
-            c = 4
-        elif options["density"] == "dense":
-            c = 1
-        else:
-            c = 16
-        # add position
-        forceatlas2 = ForceAtlas2(
-            # Behavior alternatives
-            outboundAttractionDistribution=True,  # Dissuade hubs
-            linLogMode=False,  # NOT IMPLEMENTED
-            adjustSizes=False,  # Prevent overlap (NOT IMPLEMENTED)
-            edgeWeightInfluence=1.0,
-            # Performance
-            jitterTolerance=1.0,  # Tolerance
-            barnesHutOptimize=True,
-            barnesHutTheta=1.2,
-            multiThreaded=False,  # NOT IMPLEMENTED
-            # Tuning
-            scalingRatio=math.sqrt(ratio) * c,
-            strongGravityMode=False,
-            gravity=ratio * 25,
-            # Log
-            verbose=True)
-
-        graph.es['weights'] = [0 if i == -
-                               1 else math.sqrt(ratio)*15 for i in g_status.e_community]
-        positions = forceatlas2.forceatlas2_igraph_layout(
-            graph, pos=None, iterations=2000, weight_attr='weights')
-
-        return positions
->>>>>>> b43a0dcdcd8ff1273e8f5161860f83daf3445379
 
     def __compute_stats(self, g_status, options):
         # g_status.density = graph.density()  # density
