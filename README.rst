@@ -1,8 +1,8 @@
 Automatic Graph Visualizer (AGVIZ)
 ==================================
 
-.. figure:: https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png
-   :alt: sample\_output
+.. figure:: https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out2.png
+   :alt: sample\_output2
 
    sample\_output
 
