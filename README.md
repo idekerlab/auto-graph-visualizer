@@ -1,5 +1,5 @@
 # Automatic Graph Visualizer (AGVIZ)
- <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out2.png" width=50%>
+ <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/develop/images/sample_out2.png" width=50%>
 
 
 **An automatic graph visualize package for [Cytoscape](https://cytoscape.org/).**
