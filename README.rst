@@ -1,11 +1,6 @@
 Automatic Graph Visualizer (AGVIZ)
 ==================================
 
-.. figure:: https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out2.png
-   :alt: sample\_output2
-
-   sample\_output
-
 **An automatic graph visualize package for
 `Cytoscape <https://cytoscape.org/>`__.**
 
