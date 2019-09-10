@@ -99,6 +99,7 @@ test_in.cx
 test_out.cx
 
 # images
+images/
 sample_in.png  
 sample_out.png  
 sample_out_Accent.png  
