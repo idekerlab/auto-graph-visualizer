@@ -1,11 +1,6 @@
 Automatic Graph Visualizer (AGVIZ)
 ==================================
 
-.. figure:: https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png
-   :alt: sample\_output
-
-   sample\_output
-
 **An automatic graph visualize package for
 `Cytoscape <https://cytoscape.org/>`__.**
 
@@ -61,20 +56,20 @@ Known issues in installing
 
        $ cat your_file | agviz
 
-   you can chose following parameters:
+   Options:
 
--  -n : output graph name(.cx) (default : 'test\_out')
--  -p : output directory path (default : './')
--  -a : community detection algorithm (default : 'greedy')
+-  -n : Output graph name (.cx). (default : 'test\_out')
+-  -p : Output directory path. (default : './')
+-  -a : Community detection algorithm. (default : 'greedy')
 
-   -  greedy : based on the greedy optimization of modularity.
+   -  greedy : Based on the greedy optimization of modularity
       `detail <https://journals.aps.org/pre/abstract/10.1103/PhysRevE.70.066111>`__
    -  eigenvec : Newman's eigenvector community structure detection.
       `detail <https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104>`__
-   -  labelprop : the label propagation method of Raghavan et al.
+   -  labelprop : The label propagation method of Raghavan et al.
       `detail <https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106>`__
 
--  -cp : base color palette (default : 'hls')
+-  -cp : Base color palette. (default : 'hls')
 
    -  hls
 
@@ -87,6 +82,33 @@ Known issues in installing
    -  hsv
 
    -  gnuplot
+
+-  -ns : The standard of nodesize. (default : 'betweenness')
+
+   -  closeness
+   -  degree
+   -  pagerank
+   -  betweenness
+   -  diversity
+
+-  -maxns : Value of criterion which maximum the node size. (default :
+   1000000 \*you may need adjust this value according to the criterion
+   and the network)
+
+-  -d : Density of output graph.(default : 'normal')
+
+   -  density
+   -  normal
+   -  sparse
+
+-  -pos : Algorithm of node positioning for graph layout.(default :
+   'fa')
+
+   -  fa :
+      `forceatras2 <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679>`__
+   -  kk : kamada-kawai >Tomihisa Kamada and Satoru Kawai. An Algorithm
+      for Drawing General Undirected Graphs. Information Processing
+      Letters 31:7-15, 1989.
 
 Authors
 -------

@@ -15,6 +15,10 @@ def main():
     SAVE_NAME = args.path + G_NAME
     ALGORITHM = args.algorithm
     COLORPALETTE = args.colorpalette
+    NODE_SIZE = args.nodesize
+    MAX_NODESIZE = args.maxnodesize
+    DENSITY = args.density
+    POSITIONS_ALG = args.positions
 
     cx_network = json.load(sys.stdin)
 
@@ -22,7 +26,11 @@ def main():
         "graph_name": G_NAME,
         "output_file_name": SAVE_NAME,
         "algorithm": ALGORITHM,
-        "color_palette": COLORPALETTE
+        "color_palette": COLORPALETTE,
+        "nodesize": NODE_SIZE,
+        "maxnodesize": MAX_NODESIZE,
+        "density": DENSITY,
+        "positions": POSITIONS_ALG,
     }
 
     # Create visualizer instance

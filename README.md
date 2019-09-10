@@ -1,6 +1,5 @@
 # Automatic Graph Visualizer (AGVIZ)
-
-![sample_output](https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png)
+ <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/develop/images/sample_out2.png" width=100%>
 
 
 **An automatic graph visualize package for [Cytoscape](https://cytoscape.org/).**
@@ -41,15 +40,15 @@ $ python3 setup.py install
 ```
 $ cat your_file | agviz
 ```
-options:
+Options:
 
-* -n : output graph name(.cx) (default : 'test_out')
-* -p : output directory path (default : './')
-* -a : community detection algorithm (default : 'greedy')
-    * greedy : based on the greedy optimization of modularity. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.70.066111)
+* -n : Output graph name (.cx). (default : 'test_out')
+* -p : Output directory path. (default : './')
+* -a : Community detection algorithm. (default : 'greedy')
+    * greedy : Based on the greedy optimization of modularity [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.70.066111)
     * eigenvec : Newman's eigenvector community structure detection. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104)
-    * labelprop : the label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
-* -cp : base color palette (default : 'hls')
+    * labelprop : The label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
+* -cp : Base color palette. (default : 'hls')
     * hls
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png" width=50%>
 
@@ -67,6 +66,24 @@ options:
 
     * gnuplot
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out_gnuplot.png" width=50%>
+* -ns : The standard of nodesize. (default : 'betweenness')
+    * closeness
+    * degree
+    * pagerank
+    * betweenness
+    * diversity
+* -maxns : Value of criterion which maximum the node size. (default : 1000000 *you may need adjust this value according to the criterion and the network)
+
+* -d : Density of output graph.(default : 'normal')
+    * density
+    * normal
+    * sparse
+
+* -pos : Algorithm of node positioning for graph layout.(default : 'fa')
+    * fa : [forceatras2 ](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679)
+    * kk : kamada-kawai 
+        >Tomihisa Kamada and Satoru Kawai. An Algorithm for Drawing General Undirected Graphs. Information Processing Letters 31:7-15, 1989.
+
 
 
 ## Authors
