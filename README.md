@@ -48,6 +48,8 @@ Options:
     * greedy : Based on the greedy optimization of modularity [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.70.066111)
     * eigenvec : Newman's eigenvector community structure detection. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104)
     * labelprop : The label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
+    * rest : Community Detection Rest service. [detail](http://ddot.ucsd.edu/cd/)    ([github](https://github.com/ndexbio/communitydetection-rest-server)) 
+    **See the [example](https://github.com/idekerlab/auto-graph-visualizer/blob/develop/examples/Untitled.ipynb) how to use.**
 * -cp : Base color palette. (default : 'hls')
     * hls
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png" width=50%>
@@ -72,7 +74,7 @@ Options:
     * pagerank
     * betweenness
     * diversity
-* -maxns : Value of criterion which maximum the node size. (default : 1000000 *you may need adjust this value according to the criterion and the network)
+* -maxns : Value of criterion which maximum the node size. (default : 100 *you may need adjust this value according to the criterion and the network)
 
 * -d : Density of output graph.(default : 'normal')
     * density
@@ -84,6 +86,7 @@ Options:
     * kk : kamada-kawai 
         >Tomihisa Kamada and Satoru Kawai. An Algorithm for Drawing General Undirected Graphs. Information Processing Letters 31:7-15, 1989.
 
+* -dln : The number of display labels. (default : 20)
 
 
 ## Authors
