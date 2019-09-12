@@ -52,7 +52,7 @@ def get_args():
     parser.add_argument('-ns', '--nodesize', default='betweenness', type=str,
                         choices=['closeness', 'degree', 'pagerank', 'betweenness', 'diversity'], help='This is standard of node size')
     parser.add_argument('-maxns', '--maxnodesize',
-                        default=1000000, type=int, help='This is max node size')
+                        default=100, type=int, help='This is max node size')
     parser.add_argument('-d', '--density', default='normal', type=str,
                         choices=['dense', 'normal', 'sparse'], help='This is density of output graph')
     parser.add_argument('-pos', '--positions', default='fa',
@@ -105,7 +105,7 @@ def rgb2hex(r, g, b):
     return html_color
 
 
-def communities_from_clusterfile(data,rank = 1):
+def communities_from_clusterfile(data, rank = 1):
     hierarchy = 0
     clist = []
     flag = True
