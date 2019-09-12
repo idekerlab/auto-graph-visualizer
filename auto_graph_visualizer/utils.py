@@ -5,23 +5,24 @@ import sys
 import igraph
 import seaborn as sns
 
+
 class UnionFind:
     def __init__(self, n):
         # negative : root
         # non-negative : rank
         self.table = [-1] * n
- 
+
     def _root(self, x):
         if self.table[x] < 0:
-            #print(x)
+            # print(x)
             return x
         else:
             self.table[x] = self._root(self.table[x])
             return self.table[x]
- 
+
     def find(self, x, y):
         return self._root(x) == self._root(y)
- 
+
     def unite(self, x, y):
         r1 = self._root(x)
         r2 = self._root(y)
@@ -35,7 +36,6 @@ class UnionFind:
                 self.table[r1] -= 1
         else:
             self.table[r1] = r2
-
 
 
 def get_args():
@@ -57,6 +57,8 @@ def get_args():
                         choices=['dense', 'normal', 'sparse'], help='This is density of output graph')
     parser.add_argument('-pos', '--positions', default='fa',
                         choices=['fa', 'kk'], help='This is layout algorithm')
+    parser.add_argument('-dln', '--displaylabelnumber', default='20',
+                        type=int, help='This is the number of display labels')
     return parser.parse_args()
 
 
@@ -81,7 +83,7 @@ def setCommunityColors(cp, members):
     num_members = len(members)
     unique_communities = list(set(members))
     num_communities = len(unique_communities)
-    d_colors = {-1:'#AAAAAA'}
+    d_colors = {-1: '#AAAAAA'}
 
     colorp = sns.color_palette(cp, num_communities)
 
@@ -89,8 +91,9 @@ def setCommunityColors(cp, members):
                             int(a[2]*255)) for a in colorp]
 
     for i, communityname in enumerate(unique_communities):
-        d_colors[communityname] = colorpalette[i]     
+        d_colors[communityname] = colorpalette[i]
     return d_colors
+
 
 def communityToColors(colors, members):
     num_members = len(members)
@@ -99,17 +102,18 @@ def communityToColors(colors, members):
         l_colors[i] = colors[members[i]]
     return l_colors
 
+
 def rgb2hex(r, g, b):
     color = (r, g, b)
     html_color = '#%02X%02X%02X' % (color[0], color[1], color[2])
     return html_color
 
 
-def communities_from_clusterfile(data, rank = 1):
+def communities_from_clusterfile(data, rank=1):
     hierarchy = 0
     clist = []
     flag = True
-    node_list=set()
+    node_list = set()
     UF = UnionFind(int(data.split(';')[-2].split(',')[0]))
     for line in reversed(data.split(';')):
         slist = line.split(',')
@@ -123,11 +127,12 @@ def communities_from_clusterfile(data, rank = 1):
         if slist[2].startswith('c-m'):
             node_list.add(int(slist[1]))
         if hierarchy >= rank:
-            UF.unite(int(slist[0]),int(slist[1]))
+            UF.unite(int(slist[0]), int(slist[1]))
     if hierarchy < rank:
         print("Your rank is larger than hierarchy\n")
         sys.exit()
     return UF.table[0:len(node_list)]
+
 
 def get_communities(algo, g, rest_output=None):
     communities = []

@@ -180,7 +180,6 @@ class AutoGraphVisualizer:
         cyconfig['cyVisualProperties'][1]['mappings']['NODE_SIZE']['definition'] = nodesizeprop
 
     def __add_nodelabel(self, g_status, cyconfig, options):
-        n = 5
         nodelabelprop = cyconfig['cyVisualProperties'][1]['mappings']['NODE_LABEL_FONT_SIZE']['definition']
         nodelabelprop = nodelabelprop.split(',')
         tmp = nodelabelprop[0].split('=')
@@ -189,14 +188,24 @@ class AutoGraphVisualizer:
         nodelabelprop[0] = tmp
         tmp = nodelabelprop[5].split('=')
         top_nodesize = sorted(
-            getattr(g_status, options['nodesize']))[-n:]
+            getattr(g_status, options['nodesize']))[-options['displaylabels']:]
         tmp[2] = str(top_nodesize[0])
         tmp = '='.join(tmp)
         nodelabelprop[5] = tmp
+
+        tmp = nodelabelprop[6].split('=')
+        tmp[2] = str(options['maxnodesize']/2)
+        tmp = '='.join(tmp)
+        nodelabelprop[6] = tmp
+
+        tmp = nodelabelprop[7].split('=')
+        tmp[2] = str(options['maxnodesize']/2)
+        tmp = '='.join(tmp)
+        nodelabelprop[7] = tmp
+
         tmp = nodelabelprop[-1].split('=')
         tmp[2] = str(top_nodesize[-1])
         tmp = '='.join(tmp)
         nodelabelprop[-1] = tmp
         nodelabelprop = ','.join(nodelabelprop)
         cyconfig['cyVisualProperties'][1]['mappings']['NODE_LABEL_FONT_SIZE']['definition'] = nodelabelprop
-        print(nodelabelprop)
