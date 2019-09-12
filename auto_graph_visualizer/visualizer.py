@@ -41,6 +41,7 @@ class AutoGraphVisualizer:
         g_original = igraph.Graph.TupleList(tuples, directed=False)
 
         # Pick largest subgraph
+
         subgraphs = g_original.decompose()
         tmp = [i.vcount() for i in subgraphs]
         largeset_subgraph = subgraphs[tmp.index(max(tmp))]
@@ -127,8 +128,9 @@ class AutoGraphVisualizer:
             options["algorithm"], g_status.graph, rest_output)
 
     def __add_ncxattributes(self, ncx, g_status, certesian, options):
-        colors = communityToColors(
+        d_colors = setCommunityColors(
             options["color_palette"], g_status.v_community)
+        colors = communityToColors(d_colors, g_status.v_community)
 
         for i in range(g_status.graph.vcount()):
             ncx.set_node_attribute(
@@ -138,8 +140,7 @@ class AutoGraphVisualizer:
             ncx.set_node_attribute(
                 i, "colors_community", colors[i])
 
-        colors = communityToColors(
-            options["color_palette"], g_status.e_community)
+        colors = communityToColors(d_colors, g_status.e_community)
 
         for i in range(g_status.graph.ecount()):
             ncx.set_edge_attribute(
