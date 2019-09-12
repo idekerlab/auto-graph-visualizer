@@ -152,6 +152,7 @@ class AutoGraphVisualizer:
         with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
             cyconfig = json.load(f)
         self.__change_nodesize(g_status, cyconfig, self.options)
+        self.__add_nodelabel(g_status, cyconfig, self.options)
         ncx.set_opaque_aspect("cartesianLayout", certesian)
         ncx.set_opaque_aspect(
             "cyVisualProperties", cyconfig['cyVisualProperties'])
@@ -169,3 +170,25 @@ class AutoGraphVisualizer:
         nodesizeprop[9] = tmp
         nodesizeprop = ','.join(nodesizeprop)
         cyconfig['cyVisualProperties'][1]['mappings']['NODE_SIZE']['definition'] = nodesizeprop
+
+    def __add_nodelabel(self, g_status, cyconfig, options):
+        n = 5
+        nodelabelprop = cyconfig['cyVisualProperties'][1]['mappings']['NODE_LABEL_FONT_SIZE']['definition']
+        nodelabelprop = nodelabelprop.split(',')
+        tmp = nodelabelprop[0].split('=')
+        tmp[1] = options['nodesize']
+        tmp = '='.join(tmp)
+        nodelabelprop[0] = tmp
+        tmp = nodelabelprop[5].split('=')
+        top_nodesize = sorted(
+            getattr(g_status, options['nodesize']))[-n:]
+        tmp[2] = str(top_nodesize[0])
+        tmp = '='.join(tmp)
+        nodelabelprop[5] = tmp
+        tmp = nodelabelprop[-1].split('=')
+        tmp[2] = str(top_nodesize[-1])
+        tmp = '='.join(tmp)
+        nodelabelprop[-1] = tmp
+        nodelabelprop = ','.join(nodelabelprop)
+        cyconfig['cyVisualProperties'][1]['mappings']['NODE_LABEL_FONT_SIZE']['definition'] = nodelabelprop
+        print(nodelabelprop)

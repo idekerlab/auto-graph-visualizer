@@ -19,7 +19,6 @@ def main():
     MAX_NODESIZE = args.maxnodesize
     DENSITY = args.density
     POSITIONS_ALG = args.positions
-    EXTCOMDETEC = args.extcom
 
     cx_network = json.load(sys.stdin)
 
