@@ -14,7 +14,7 @@ def get_args():
     parser.add_argument('-p', '--path', default='./',
                         type=str, help='This is output directory path')
     parser.add_argument('-a', '--algorithm', default='greedy', type=str,
-                        choices=['greedy', 'eigenvec', 'labelprop'], help='This is community detection algorithm')
+                        choices=['greedy', 'eigenvec', 'labelprop', 'rest'], help='This is community detection algorithm')
     parser.add_argument('-cp', '--colorpalette', default='hls', type=str,
                         choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'], help='This is color palette')
     parser.add_argument('-ns', '--nodesize', default='betweenness', type=str,
@@ -70,7 +70,23 @@ def rgb2hex(r, g, b):
     return html_color
 
 
-def get_communities(algo, g):
+def communities_from_clusterfile(data):
+
+    community = {}
+    for line in data.split(';'):
+        slist = line.split(',')
+        if len(slist) != 3:
+            #sys.stderr.write(line + ' does not have appropriate number of columns. skipping\n')
+            continue
+
+        if slist[2].startswith('c-m'):
+            community.update({int(slist[1]): int(slist[0])})
+    communities = [community[i] for i in range(len(community))]
+
+    return communities
+
+
+def get_communities(algo, g, rest_output=None):
     communities = []
     v_community = []
     e_community = []
@@ -85,9 +101,13 @@ def get_communities(algo, g):
         v_community = communities.membership
         e_community = getCommunityEdge(g, v_community)
 
-    else:
+    elif algo == 'labelprop':
         communities = g.community_label_propagation()
         v_community = communities.membership
+        e_community = getCommunityEdge(g, v_community)
+    else:
+        communities = communities_from_clusterfile(rest_output)
+        v_community = communities
         e_community = getCommunityEdge(g, v_community)
 
     return communities, v_community, e_community

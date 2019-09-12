@@ -22,8 +22,9 @@ class graph_status:
 
 class AutoGraphVisualizer:
 
-    def __init__(self, options):
+    def __init__(self, options, rest_output=None):
         self.options = options
+        self.rest_output = rest_output
 
     def generate_viz(self, cx_network):
         nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
@@ -47,7 +48,7 @@ class AutoGraphVisualizer:
         g_status = graph_status(
             largeset_subgraph.simplify(multiple=True, loops=True))
 
-        self.__compute_stats(g_status, self.options)
+        self.__compute_stats(g_status, self.options, self.rest_output)
 
         positions = self.__apply_layout(g_status.graph, g_status, self.options)
 
@@ -117,13 +118,13 @@ class AutoGraphVisualizer:
 
             return positions
 
-    def __compute_stats(self, g_status, options):
+    def __compute_stats(self, g_status, options, rest_output=None):
         # g_status.density = graph.density()  # density
         # g_status.transitivity_undirected = graph.transitivity_undirected()  # Transitivity
         setattr(g_status, options['nodesize'], getattr(
             g_status.graph, options['nodesize'])())
         g_status.communities, g_status.v_community, g_status.e_community = get_communities(
-            options["algorithm"], g_status.graph)
+            options["algorithm"], g_status.graph, rest_output)
 
     def __add_ncxattributes(self, ncx, g_status, certesian, options):
         colors = communityToColors(
