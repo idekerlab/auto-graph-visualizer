@@ -6,6 +6,38 @@ import igraph
 import seaborn as sns
 
 
+class UnionFind:
+    def __init__(self, n):
+        # negative : root
+        # non-negative : rank
+        self.table = [-1] * n
+
+    def _root(self, x):
+        if self.table[x] < 0:
+            # print(x)
+            return x
+        else:
+            self.table[x] = self._root(self.table[x])
+            return self.table[x]
+
+    def find(self, x, y):
+        return self._root(x) == self._root(y)
+
+    def unite(self, x, y):
+        r1 = self._root(x)
+        r2 = self._root(y)
+        if r1 == r2:
+            return
+        d1 = self.table[r1]
+        d2 = self.table[r2]
+        if d1 <= d2:
+            self.table[r2] = r1
+            if d1 == d2:
+                self.table[r1] -= 1
+        else:
+            self.table[r1] = r2
+
+
 def get_args():
     parser = argparse.ArgumentParser(
         description='test argparse script')
@@ -14,17 +46,19 @@ def get_args():
     parser.add_argument('-p', '--path', default='./',
                         type=str, help='This is output directory path')
     parser.add_argument('-a', '--algorithm', default='greedy', type=str,
-                        choices=['greedy', 'eigenvec', 'labelprop'], help='This is community detection algorithm')
+                        choices=['greedy', 'eigenvec', 'labelprop', 'rest'], help='This is community detection algorithm')
     parser.add_argument('-cp', '--colorpalette', default='hls', type=str,
                         choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'], help='This is color palette')
     parser.add_argument('-ns', '--nodesize', default='betweenness', type=str,
                         choices=['closeness', 'degree', 'pagerank', 'betweenness', 'diversity'], help='This is standard of node size')
     parser.add_argument('-maxns', '--maxnodesize',
-                        default=1000000, type=int, help='This is max node size')
+                        default=100, type=int, help='This is max node size')
     parser.add_argument('-d', '--density', default='normal', type=str,
                         choices=['dense', 'normal', 'sparse'], help='This is density of output graph')
     parser.add_argument('-pos', '--positions', default='fa',
                         choices=['fa', 'kk'], help='This is layout algorithm')
+    parser.add_argument('-dln', '--displaylabelnumber', default='20',
+                        type=int, help='This is the number of display labels')
     return parser.parse_args()
 
 
@@ -45,24 +79,41 @@ def getCommunityEdge(g, community):
     return edge_community
 
 
-def communityToColors(cp, members):
-    basecolor = '#AAAAAA'
+def setCommunityColors(cp, members):
     num_members = len(members)
     unique_communities = list(set(members))
+<<<<<<< HEAD
     num_communities = len(unique_communities)+1
     colors = [basecolor]*num_members
+=======
+    num_communities = len(unique_communities)
+    d_colors = {-1: '#AAAAAA'}
+>>>>>>> develop
 
     colorp = sns.color_palette(cp, num_communities)
 
     colorpalette = [rgb2hex(int(a[0]*255), int(a[1]*255),
                             int(a[2]*255)) for a in colorp]
 
+    for i, communityname in enumerate(unique_communities):
+        d_colors[communityname] = colorpalette[i]
+    return d_colors
+
+
+def communityToColors(colors, members):
+    num_members = len(members)
+    l_colors = ["#AAAAAA"]*num_members
     for i in range(num_members):
+<<<<<<< HEAD
         newcolor = colorpalette[unique_communities.index(members[i])]
         if(members[i] == -1):
             newcolor = basecolor
         colors[i] = newcolor
     return colors
+=======
+        l_colors[i] = colors[members[i]]
+    return l_colors
+>>>>>>> develop
 
 
 def rgb2hex(r, g, b):
@@ -71,7 +122,32 @@ def rgb2hex(r, g, b):
     return html_color
 
 
-def get_communities(algo, g):
+def communities_from_clusterfile(data, rank=1):
+    hierarchy = 0
+    clist = []
+    flag = True
+    node_list = set()
+    UF = UnionFind(int(data.split(';')[-2].split(',')[0]))
+    for line in reversed(data.split(';')):
+        slist = line.split(',')
+        if len(slist) != 3:
+            continue
+        if slist[0] in clist:
+            hierarchy += 1
+            clist.clear()
+        else:
+            clist.append(slist[1])
+        if slist[2].startswith('c-m'):
+            node_list.add(int(slist[1]))
+        if hierarchy >= rank:
+            UF.unite(int(slist[0]), int(slist[1]))
+    if hierarchy < rank:
+        print("Your rank is larger than hierarchy\n")
+        sys.exit()
+    return UF.table[0:len(node_list)]
+
+
+def get_communities(algo, g, rest_output=None):
     communities = []
     v_community = []
     e_community = []
@@ -86,9 +162,13 @@ def get_communities(algo, g):
         v_community = communities.membership
         e_community = getCommunityEdge(g, v_community)
 
-    else:
+    elif algo == 'labelprop':
         communities = g.community_label_propagation()
         v_community = communities.membership
+        e_community = getCommunityEdge(g, v_community)
+    else:
+        communities = communities_from_clusterfile(rest_output)
+        v_community = communities
         e_community = getCommunityEdge(g, v_community)
 
     return communities, v_community, e_community

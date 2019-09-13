@@ -19,6 +19,7 @@ def main():
     MAX_NODESIZE = args.maxnodesize
     DENSITY = args.density
     POSITIONS_ALG = args.positions
+    DISP_LABELNUM = args.displaylabelnumber
 
     cx_network = json.load(sys.stdin)
 
@@ -31,7 +32,7 @@ def main():
         "maxnodesize": MAX_NODESIZE,
         "density": DENSITY,
         "positions": POSITIONS_ALG,
-    }
+        "displaylabels": DISP_LABELNUM}
 
     # Create visualizer instance
     viz = AutoGraphVisualizer(options)

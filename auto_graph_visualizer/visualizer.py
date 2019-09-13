@@ -22,8 +22,9 @@ class graph_status:
 
 class AutoGraphVisualizer:
 
-    def __init__(self, options):
+    def __init__(self, options, rest_output=None):
         self.options = options
+        self.rest_output = rest_output
 
     def generate_viz(self, cx_network):
         nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
@@ -40,6 +41,7 @@ class AutoGraphVisualizer:
         g_original = igraph.Graph.TupleList(tuples, directed=False)
 
         # Pick largest subgraph
+
         subgraphs = g_original.decompose()
         tmp = [i.vcount() for i in subgraphs]
         largeset_subgraph = subgraphs[tmp.index(max(tmp))]
@@ -47,7 +49,7 @@ class AutoGraphVisualizer:
         g_status = graph_status(
             largeset_subgraph.simplify(multiple=True, loops=True))
 
-        self.__compute_stats(g_status, self.options)
+        self.__compute_stats(g_status, self.options, self.rest_output)
 
         positions = self.__apply_layout(g_status.graph, g_status, self.options)
 
@@ -117,17 +119,18 @@ class AutoGraphVisualizer:
 
             return positions
 
-    def __compute_stats(self, g_status, options):
+    def __compute_stats(self, g_status, options, rest_output=None):
         # g_status.density = graph.density()  # density
         # g_status.transitivity_undirected = graph.transitivity_undirected()  # Transitivity
         setattr(g_status, options['nodesize'], getattr(
             g_status.graph, options['nodesize'])())
         g_status.communities, g_status.v_community, g_status.e_community = get_communities(
-            options["algorithm"], g_status.graph)
+            options["algorithm"], g_status.graph, rest_output)
 
     def __add_ncxattributes(self, ncx, g_status, certesian, options):
-        colors = communityToColors(
+        d_colors = setCommunityColors(
             options["color_palette"], g_status.v_community)
+        colors = communityToColors(d_colors, g_status.v_community)
 
         for i in range(g_status.graph.vcount()):
             ncx.set_node_attribute(
@@ -137,8 +140,7 @@ class AutoGraphVisualizer:
             ncx.set_node_attribute(
                 i, "colors_community", colors[i])
 
-        colors = communityToColors(
-            options["color_palette"], g_status.e_community)
+        colors = communityToColors(d_colors, g_status.e_community)
 
         for i in range(g_status.graph.ecount()):
             ncx.set_edge_attribute(
@@ -150,6 +152,7 @@ class AutoGraphVisualizer:
         with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
             cyconfig = json.load(f)
         self.__change_nodesize(g_status, cyconfig, self.options)
+        self.__add_nodelabel(g_status, cyconfig, self.options)
         ncx.set_opaque_aspect("cartesianLayout", certesian)
         ncx.set_opaque_aspect(
             "cyVisualProperties", cyconfig['cyVisualProperties'])
@@ -161,9 +164,48 @@ class AutoGraphVisualizer:
         tmp[1] = options['nodesize']
         tmp = '='.join(tmp)
         nodesizeprop[0] = tmp
-        tmp = nodesizeprop[9].split('=')
+        tmp = nodesizeprop[6].split('=')
         tmp[2] = str(int(options['maxnodesize']))
+        tmp = '='.join(tmp)
+        nodesizeprop[6] = tmp
+        tmp = nodesizeprop[7].split('=')
+        tmp[2] = str(int(options['maxnodesize']))
+        tmp = '='.join(tmp)
+        nodesizeprop[7] = tmp
+        tmp = nodesizeprop[9].split('=')
+        tmp[2] = str(max(getattr(g_status, options['nodesize'])))
         tmp = '='.join(tmp)
         nodesizeprop[9] = tmp
         nodesizeprop = ','.join(nodesizeprop)
         cyconfig['cyVisualProperties'][1]['mappings']['NODE_SIZE']['definition'] = nodesizeprop
+
+    def __add_nodelabel(self, g_status, cyconfig, options):
+        nodelabelprop = cyconfig['cyVisualProperties'][1]['mappings']['NODE_LABEL_FONT_SIZE']['definition']
+        nodelabelprop = nodelabelprop.split(',')
+        tmp = nodelabelprop[0].split('=')
+        tmp[1] = options['nodesize']
+        tmp = '='.join(tmp)
+        nodelabelprop[0] = tmp
+        tmp = nodelabelprop[5].split('=')
+        top_nodesize = sorted(
+            getattr(g_status, options['nodesize']))[-options['displaylabels']:]
+        tmp[2] = str(top_nodesize[0])
+        tmp = '='.join(tmp)
+        nodelabelprop[5] = tmp
+
+        tmp = nodelabelprop[6].split('=')
+        tmp[2] = str(options['maxnodesize']/2)
+        tmp = '='.join(tmp)
+        nodelabelprop[6] = tmp
+
+        tmp = nodelabelprop[7].split('=')
+        tmp[2] = str(options['maxnodesize']/2)
+        tmp = '='.join(tmp)
+        nodelabelprop[7] = tmp
+
+        tmp = nodelabelprop[-1].split('=')
+        tmp[2] = str(top_nodesize[-1])
+        tmp = '='.join(tmp)
+        nodelabelprop[-1] = tmp
+        nodelabelprop = ','.join(nodelabelprop)
+        cyconfig['cyVisualProperties'][1]['mappings']['NODE_LABEL_FONT_SIZE']['definition'] = nodelabelprop
