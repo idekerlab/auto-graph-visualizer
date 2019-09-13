@@ -82,13 +82,8 @@ def getCommunityEdge(g, community):
 def setCommunityColors(cp, members):
     num_members = len(members)
     unique_communities = list(set(members))
-<<<<<<< HEAD
-    num_communities = len(unique_communities)+1
-    colors = [basecolor]*num_members
-=======
     num_communities = len(unique_communities)
     d_colors = {-1: '#AAAAAA'}
->>>>>>> develop
 
     colorp = sns.color_palette(cp, num_communities)
 
@@ -104,16 +99,8 @@ def communityToColors(colors, members):
     num_members = len(members)
     l_colors = ["#AAAAAA"]*num_members
     for i in range(num_members):
-<<<<<<< HEAD
-        newcolor = colorpalette[unique_communities.index(members[i])]
-        if(members[i] == -1):
-            newcolor = basecolor
-        colors[i] = newcolor
-    return colors
-=======
         l_colors[i] = colors[members[i]]
     return l_colors
->>>>>>> develop
 
 
 def rgb2hex(r, g, b):
