@@ -49,7 +49,7 @@ Options:
     * eigenvec : Newman's eigenvector community structure detection. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104)
     * labelprop : The label propagation method of Raghavan et al. [detail](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106)
     * rest : Community Detection Rest service. [detail](http://ddot.ucsd.edu/cd/)    ([github](https://github.com/ndexbio/communitydetection-rest-server)) 
-    **See the [example](https://github.com/idekerlab/auto-graph-visualizer/blob/develop/examples/Untitled.ipynb) how to use.**
+    **See the [example](https://github.com/idekerlab/auto-graph-visualizer/blob/master/examples/UsingRestComDetec.ipynb) how to use.**
 * -cp : Base color palette. (default : 'hls')
     * hls
     <img src="https://github.com/idekerlab/auto-graph-visualizer/blob/master/images/sample_out.png" width=50%>

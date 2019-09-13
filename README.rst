@@ -68,6 +68,12 @@ Known issues in installing
       `detail <https://journals.aps.org/pre/abstract/10.1103/PhysRevE.74.036104>`__
    -  labelprop : The label propagation method of Raghavan et al.
       `detail <https://journals.aps.org/pre/abstract/10.1103/PhysRevE.76.036106>`__
+   -  rest : Community Detection Rest service.
+      `detail <http://ddot.ucsd.edu/cd/>`__
+      (`github <https://github.com/ndexbio/communitydetection-rest-server>`__)
+      **See the
+      `example <https://github.com/idekerlab/auto-graph-visualizer/blob/master/examples/UsingRestComDetec.ipynb>`__
+      how to use.**
 
 -  -cp : Base color palette. (default : 'hls')
 
@@ -92,8 +98,8 @@ Known issues in installing
    -  diversity
 
 -  -maxns : Value of criterion which maximum the node size. (default :
-   1000000 \*you may need adjust this value according to the criterion
-   and the network)
+   100 \*you may need adjust this value according to the criterion and
+   the network)
 
 -  -d : Density of output graph.(default : 'normal')
 
@@ -109,6 +115,8 @@ Known issues in installing
    -  kk : kamada-kawai >Tomihisa Kamada and Satoru Kawai. An Algorithm
       for Drawing General Undirected Graphs. Information Processing
       Letters 31:7-15, 1989.
+
+-  -dln : The number of display labels. (default : 20)
 
 Authors
 -------
