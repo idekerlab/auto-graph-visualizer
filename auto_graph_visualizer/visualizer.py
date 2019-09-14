@@ -189,6 +189,7 @@ class AutoGraphVisualizer:
         tmp = nodelabelprop[5].split('=')
         top_nodesize = sorted(
             getattr(g_status, options['nodesize']))[-options['displaylabels']:]
+        print(top_nodesize)
         tmp[2] = str(top_nodesize[0])
         tmp = '='.join(tmp)
         nodelabelprop[5] = tmp

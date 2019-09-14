@@ -131,7 +131,7 @@ def communities_from_clusterfile(data, rank=1):
     if hierarchy < rank:
         print("Your rank is larger than hierarchy\n")
         sys.exit()
-    return UF.table[0:len(node_list)]
+    return [UF._root(i) for i in range(len(node_list))]
 
 
 def get_communities(algo, g, rest_output=None):
