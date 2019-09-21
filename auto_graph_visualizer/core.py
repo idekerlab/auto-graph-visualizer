@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
+
 import sys
 import json
-from .utils import *
+from . import utils
 from .visualizer import AutoGraphVisualizer
 
 
 def main():
-    if(sys.stdin.isatty()):
+    if sys.stdin.isatty():
         print("Usage: cat <file> | python3 graphvis.py")
         sys.exit()
-    args = get_args()
+
+    args = utils.get_args()
 
     G_NAME = args.name
     SAVE_NAME = args.path + G_NAME

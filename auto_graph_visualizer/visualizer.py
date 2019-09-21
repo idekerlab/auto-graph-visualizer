@@ -11,6 +11,8 @@ import json
 import os
 import numpy as np
 
+from . import resource_manager
+
 
 class graph_status:
     def __init__(self, graph):
@@ -149,8 +151,11 @@ class AutoGraphVisualizer:
                 i, "colors_community", colors[i])
 
         # add cytoscape visualization config
-        with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
-            cyconfig = json.load(f)
+        # Read from resource
+
+        cyconfig = resource_manager.get_visual_style()
+        # with open(os.path.dirname(__file__)+'/cy_visual.json') as f:
+        #     cyconfig = json.load(f)
         self.__change_nodesize(g_status, cyconfig, self.options)
         self.__add_nodelabel(g_status, cyconfig, self.options)
         ncx.set_opaque_aspect("cartesianLayout", certesian)

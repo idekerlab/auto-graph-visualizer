@@ -1,21 +1,20 @@
-import pandas as pd
 import igraph
 from ndex2.nice_cx_network import NiceCXNetwork
-import ndex2.client as nc
 import ndex2
-import networkx as nx
-from fa2 import ForceAtlas2
-from . import utils
+from .context import auto_graph_visualizer as agviz
 
 SERVER = 'public.ndexbio.org'
 UUID = '0dcb39d6-43b6-11e6-a5c7-06603eb7f303'
 
 
 if __name__ == '__main__':
+
     nice_cx_network = ndex2.create_nice_cx_from_server(
-        server=SEVER, uuid=UUID)
+        server=SERVER, uuid=UUID)
+    
     # show the graph detail
     nice_cx_network.print_summary()
+    
     # convert nice_cx -> pandas
     nice_cx_from_server_df = nice_cx_network.to_pandas_dataframe()
 
@@ -27,4 +26,5 @@ if __name__ == '__main__':
     # Pick largest subgraph
     subgraphs = g_original.decompose()
     tmp = [i.vcount() for i in subgraphs]
-largeset_subgraph = subgraphs[tmp.index(max(tmp))]
+
+    largeset_subgraph = subgraphs[tmp.index(max(tmp))]
