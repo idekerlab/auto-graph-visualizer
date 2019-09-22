@@ -1,9 +1,5 @@
-import json
-
 from . import resource_manager
 
-# with open('./cy_visual.json') as f:
-#     cyconfig = json.load(f)
 
 cyconfig = resource_manager.get_visual_style()
 
@@ -20,4 +16,4 @@ nodesizeprop[9] = tmp
 nodesizeprop = ','.join(nodesizeprop)
 cyconfig['cyVisualProperties'][1]['mappings']['NODE_SIZE']['definition'] = nodesizeprop
 
-print(nodesizeprop)
+# print(nodesizeprop)

@@ -1,3 +1,6 @@
+import logging
+import io
+
 import pandas as pd
 import igraph
 from ndex2.nice_cx_network import NiceCXNetwork
@@ -30,7 +33,6 @@ class AutoGraphVisualizer:
 
     def generate_viz(self, cx_network):
         nice_cx_network = ndex2.create_nice_cx_from_raw_cx(cx_network)
-        nice_cx_network.print_summary()
 
         # convert nice_cx -> pandas
         nice_cx_df = nice_cx_network.to_pandas_dataframe()
@@ -72,7 +74,13 @@ class AutoGraphVisualizer:
 
         self.__add_ncxattributes(ncx_from_x, g_status, certesian, self.options)
 
+        #Need to supress prints
+        null_out = io.StringIO()
+        sys.stdout = null_out
+        
         cxobj = ncx_from_x.to_cx()
+        
+        sys.stdout = sys.__stdout__
 
         return cxobj
 
@@ -112,7 +120,7 @@ class AutoGraphVisualizer:
                 strongGravityMode=False,
                 gravity=ratio * 25,
                 # Log
-                verbose=True)
+                verbose=False)
 
             graph.es['weights'] = [0 if i == -
                                    1 else math.sqrt(ratio)*15 for i in g_status.e_community]
@@ -194,7 +202,7 @@ class AutoGraphVisualizer:
         tmp = nodelabelprop[5].split('=')
         top_nodesize = sorted(
             getattr(g_status, options['nodesize']))[-options['displaylabels']:]
-        print(top_nodesize)
+        # print(top_nodesize)
         tmp[2] = str(top_nodesize[0])
         tmp = '='.join(tmp)
         nodelabelprop[5] = tmp
