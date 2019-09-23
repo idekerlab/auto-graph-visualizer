@@ -22,7 +22,7 @@ if sys.version_info[:2] < (3, 7):
 
 setup(
     name='auto-graph-visualizer',
-    version='0.1.0',
+    version='0.1.1',
     description='Automatic graph visualization package',
     long_description=readme,
     author='Mikio Shiga, Atsuya Matsubara',
