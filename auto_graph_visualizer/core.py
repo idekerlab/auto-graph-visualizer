@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 
 def main():
     if sys.stdin.isatty():
-        print("Usage: cat [Input CX file name] | agviz (Output CX file name)")
+        print("Usage: cat [Input CX file name] | agviz (optional: output CX file name)")
         sys.exit()
 
     args = get_args()
@@ -43,10 +43,8 @@ def main():
     logging.info('Output CX created.')
 
     if args.name != None and args.name != '':
-        logging.info('Output CX to file' + args.name)
         tmp = open(out_file + ".cx", 'w')
         json.dump(cxobj, tmp)
     else:
-        logging.info('Output CX to STDOUT')
         json.dump(cxobj, sys.stdout, indent=2)
-        logging.info('Done!!')
+        logging.info('Finished!')

@@ -1,3 +1,5 @@
+"""Loading resource from resource file"""
+
 import json
 
 # from .compatibility import importlib_resources

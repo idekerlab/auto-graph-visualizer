@@ -114,10 +114,10 @@
                     "EDGE_TARGET_ARROW_SHAPE": "NONE",
                     "EDGE_TARGET_ARROW_SIZE": "6.0",
                     "EDGE_TARGET_ARROW_UNSELECTED_PAINT": "#000000",
-                    "EDGE_TRANSPARENCY": "120",
+                    "EDGE_TRANSPARENCY": "190",
                     "EDGE_UNSELECTED_PAINT": "#404040",
                     "EDGE_VISIBLE": "true",
-                    "EDGE_WIDTH": "2.0"
+                    "EDGE_WIDTH": "0.5"
                 },
                 "dependencies": {
                     "arrowColorMatchesEdge": "false"

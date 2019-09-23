@@ -7,9 +7,6 @@ from setuptools import setup, find_packages
 with open('README.rst') as f:
     readme = f.read()
 
-with open('LICENSE') as f:
-    license = f.read()
-
 
 def read_requirements():
     """Parse requirements from requirements.txt."""
@@ -22,8 +19,6 @@ def read_requirements():
 install_requires = read_requirements()
 if sys.version_info[:2] < (3, 7):
     install_requires.append("importlib_resources")
-
-
 
 setup(
     name='auto-graph-visualizer',
@@ -42,5 +37,15 @@ setup(
         "console_scripts": [
             "agviz=auto_graph_visualizer.core:main",
         ]
-    }
+    },
+    classifiers=(
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'Natural Language :: English',
+        'License :: OSI Approved :: MIT License',
+        "Programming Language :: Python :: 3",
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy'
+    )
 )

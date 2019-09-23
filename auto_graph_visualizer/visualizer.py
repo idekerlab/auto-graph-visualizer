@@ -1,17 +1,11 @@
-import logging
 import io
-
-import pandas as pd
 import igraph
 from ndex2.nice_cx_network import NiceCXNetwork
-import ndex2.client as nc
 import ndex2
 import networkx as nx
 from fa2 import ForceAtlas2
 from .utils import *
 import math
-import json
-import os
 import numpy as np
 
 from . import resource_manager
@@ -27,6 +21,8 @@ class graph_status:
 
 class AutoGraphVisualizer:
 
+    """Base graph visualizer class."""
+    
     def __init__(self, options, rest_output=None):
         self.options = options
         self.rest_output = rest_output
