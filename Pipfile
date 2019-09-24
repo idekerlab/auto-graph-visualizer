@@ -4,6 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pylint = "*"
+twine = "*"
 
 [packages]
 fa2 = "==0.3.5"
@@ -15,8 +17,6 @@ python-igraph = "==0.7.1.post6"
 requests = "==2.22.0"
 seaborn = "==0.9.0"
 tqdm = "==4.35.0"
-auto-graph-visualizer = {editable = true,path = "."}
-pylint = "*"
 
 [requires]
 python_version = "3.7"

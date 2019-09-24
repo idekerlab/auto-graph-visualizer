@@ -17,8 +17,6 @@ def read_requirements():
 
 # Add importlib for older versions
 install_requires = read_requirements()
-if sys.version_info[:2] < (3, 7):
-    install_requires.append("importlib_resources")
 
 setup(
     name='auto-graph-visualizer',
@@ -29,9 +27,7 @@ setup(
     author_email='m-shiga@ist.osaka-u.ac.jp, at-matbr@ist.osaka-u.ac.jp',
     url='https://github.com/idekerlab/auto-graph-visualizer',
     install_requires=install_requires,
-    license=license,
     packages=find_packages(exclude=('tests', 'docs')),
-    # packages=['auto_graph_visualizer'],
     package_data={'': ['*.json']},
     entry_points={
         "console_scripts": [
