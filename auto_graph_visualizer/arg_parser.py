@@ -11,7 +11,7 @@ def get_args():
     parser.add_argument('-p', '--path', default='./',
                         type=str, help='This is output directory path')
     parser.add_argument('-a', '--algorithm', default='greedy', type=str,
-                        choices=['greedy', 'eigenvec', 'labelprop', 'rest'],
+                        choices=['greedy', 'eigenvec', 'labelprop', 'rest', 'infomap'],
                         help='This is community detection algorithm')
     parser.add_argument('-cp', '--colorpalette', default='hls', type=str,
                         choices=['hls', 'Accent', 'Set1', 'brg', 'hsv', 'gnuplot'],

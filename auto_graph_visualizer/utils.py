@@ -120,21 +120,16 @@ def get_communities(algo, g, rest_output=None):
 
     if algo == 'greedy':
         communities = g.community_fastgreedy().as_clustering()
-        v_community = communities.membership
-        e_community = getCommunityEdge(g, v_community)
-
     elif algo == 'eigenvec':
         communities = g.community_leading_eigenvector()
-        v_community = communities.membership
-        e_community = getCommunityEdge(g, v_community)
-
     elif algo == 'labelprop':
         communities = g.community_label_propagation()
-        v_community = communities.membership
-        e_community = getCommunityEdge(g, v_community)
+    elif algo == 'infomap':
+        communities = g.community_infomap()
     else:
         communities = communities_from_clusterfile(rest_output)
-        v_community = communities
-        e_community = getCommunityEdge(g, v_community)
+    
+    v_community = communities.membership
+    e_community = getCommunityEdge(g, v_community)
 
     return communities, v_community, e_community
