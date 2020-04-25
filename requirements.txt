@@ -1,9 +1,9 @@
 fa2==0.3.5
 matplotlib==3.1.1
 ndex2==3.2.0
-networkx==2.3
+networkx==2.4
 pandas==0.25.0
-python-igraph==0.7.1.post6
+python-igraph==0.8.0
 requests==2.22.0
 seaborn==0.9.0
 tqdm==4.35.0
